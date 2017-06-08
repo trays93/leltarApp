@@ -1,0 +1,11 @@
+﻿login: bejelentkezés kezelése
+
+--> főoldal: linkek a:
+		-teljes listához: kiírja az összes termékmozgást
+		-bevételezés: beérkezési dátum, mennyiség, terméknév, beszerzési ár (db-ra vetítve), megjegyzés //adatok ellenőrzése
+		-kivételezés: kivételezési dátum, mennyiség, terméknév, beszerzési ár (db-ra vetítve), megjegyzés //adatok ellenőrzése
+		-kijelentkezés
+
+
+kivételezésnél sql-el lekérdezzük a meglévő termékneveket SELECT DISTINCT
+ellenőrizhetjük hogy egy adott termékből mennyi van készleten sql-el és nem lehet kevesebb 0-ál!
