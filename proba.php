@@ -12,6 +12,8 @@
 
 if(isset($_POST["date"])) {
     print $_POST["date"];
+    $datum = date("Y-m-d");
+    print $datum;
 }
 ?>
             

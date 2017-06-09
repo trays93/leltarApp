@@ -9,3 +9,18 @@
 
 kivételezésnél sql-el lekérdezzük a meglévő termékneveket SELECT DISTINCT
 ellenőrizhetjük hogy egy adott termékből mennyi van készleten sql-el és nem lehet kevesebb 0-ál!
+
+<div class="form-group">
+                                                    <select class="form-control" name="termek" id="termek">
+                                                    <?php
+                                                    if ($result = $mysqli->query("SELECT DISTINCT termeknev FROM termek")) {
+
+                                                        while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
+                                                            print "<option>" . $row["termeknev"] . "</option>";
+                                                        }
+                                                    $result->close();
+                                                    }
+                                                    $mysqli->close();
+                                                    ?>
+                                                </select>
+                                                </div>

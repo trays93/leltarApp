@@ -176,26 +176,42 @@ if (!isset($_SESSION["userid"])) {
                                             <div class="box-body">
                                                 <div class="form-group">
                                                     <label for="termeknev">Termék név</label>
-                                                    <input type="text" class="form-control" id="termeknev" name="termeknev" placeholder="Írd be a termék nevét">
+                                                    <input type="text" class="form-control" id="termeknev" name="termeknev" placeholder="Írd be a termék nevét" required>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="darabszam">Darabszám</label>
-                                                    <input type="number" min="0" step="1"  class="form-control" id="darabszam" name="darabszam" placeholder="Írd be a darabszámot">
+                                                    <input type="number" min="0" step="1"  class="form-control" id="darabszam" name="darabszam" placeholder="Írd be a darabszámot" required>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="egysegar">Egységár</label>
-                                                    <input type="number" min="0" step="any" class="form-control" id="egysegar" name="egysegar" placeholder="Írd be az egységárat">
+                                                    <input type="number" min="0" step="any" class="form-control" id="egysegar" name="egysegar" placeholder="Írd be az egységárat" required>
                                                 </div>
-                                                <div class="form-group">
+<!--                                                <div class="form-group">
                                                     <label for="datum">Dátum</label>
-                                                    <input type="date" class="form-control" id="datum" name="datum">
-                                                </div>
+                                                    <input type="date" class="form-control" id="datum" name="datum" required>
+                                                </div>-->
                                                 <?php
-                                                if(isset($_POST["termeknev"]) && isset($_POST["darabszam"]) && isset($_POST["egysegar"]) && isset($_POST["datum"])) {
-                                                    $termeknev = $_POST["termeknev"];
-                                                    $darabszam = $_POST["darabszam"];
-                                                    $egysegar = $_POST["egysegar"];
-                                                    $datum = $_POST["datum"];
+                                                if(isset($_POST["termeknev"]) && isset($_POST["darabszam"]) && isset($_POST["egysegar"])/* && isset($_POST["datum"])*/) {
+                                                    if(filter_var($_POST["darabszam"], FILTER_VALIDATE_INT)) {
+                                                        $darabszam = $_POST["darabszam"];
+                                                    } else {
+                                                        print "<div>";
+                                                        print "A darabszám csak egész szám lehet!";
+                                                        print "</div>";
+                                                    }
+                                                    
+                                                    if(filter_var($_POST["egysegar"], FILTER_VALIDATE_FLOAT)) {
+                                                        $egysegar = $_POST["egysegar"];
+                                                    } else {
+                                                        print "<div>";
+                                                        print "Az egységár nem tört szám!";
+                                                        print "</div>";
+                                                    }
+                                                    
+                                                    $datum = date("Y-m-d");
+                                                    
+                                                    
+                                                    $termeknev = strip_tags($_POST["termeknev"]);
                                                     
                                                     $sql = "INSERT INTO `termek` (`id`, `termeknev`, `darabszam`, `egysegar`, `datum`, `mozgas`)"
                                                         . "VALUES (NULL, '" . $termeknev . "', '" . $darabszam . "', '" . $egysegar . "', '" . $datum . "', 'Bevételezés');";

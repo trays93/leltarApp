@@ -178,7 +178,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                             <th>ID</th>
                                             <th>Terméknév</th>
                                             <th>Darabszám</th>
-                                            <th>Egységár</th>
+                                            <th>Egységár (HUF)</th>
                                             <th>Dátum</th>
                                             <th>Készlet mozgás</th>
                                         </tr>

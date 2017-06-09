@@ -172,34 +172,53 @@ if (!isset($_SESSION["userid"])) {
                                     </div>
                                     <!-- /.box-header -->
                                     <div class="box-body table-responsive no-padding">
-                                        <form role="form" method="post" action="add.php">
+                                        <form role="form" method="post" action="kivet.php">
                                             <div class="box-body">
                                                 <div class="form-group">
-                                                    <select class="form-control" name="termek" id="termek">
-                                                    <?php
-                                                    if ($result = $mysqli->query("SELECT DISTINCT termeknev FROM termek")) {
-
-                                                        while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
-                                                            print "<option>" . $row["termeknev"] . "</option>";
-                                                        }
-                                                    $result->close();
-                                                    }
-                                                    $mysqli->close();
-                                                    ?>
-                                                </select>
+                                                    <label for="termeknev">Termék név</label>
+                                                    <input type="text" class="form-control" id="termeknev" name="termeknev" placeholder="Írd be a termék nevét" required>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="exampleInputPassword">Darabszám</label>
-                                                    <input type="number" min="0" step="1"  class="form-control" id="exampleInputPassword1" name="darabszam" placeholder="Írd be a darabszámot">
+                                                    <input type="number" min="0" step="1"  class="form-control" id="exampleInputPassword1" name="darabszam" placeholder="Írd be a darabszámot" required>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="exampleInputText2">Egységár</label>
-                                                    <input type="number" min="0" step="any" class="form-control" id="exampleInputText2" name="egysegar" placeholder="Írd be az egységárat">
+                                                    <input type="number" min="0" step="any" class="form-control" id="exampleInputText2" name="egysegar" placeholder="Írd be az egységárat" required>
                                                 </div>
-                                                <div class="form-group">
+<!--                                                <div class="form-group">
                                                     <label for="exampleInputDate">Dátum</label>
                                                     <input type="date" class="form-control" id="exampleInputDate" name="date">
-                                                </div>
+                                                </div>-->
+                                                <?php
+                                                if(isset($_POST["termeknev"]) && isset($_POST["darabszam"]) && isset($_POST["egysegar"])/* && isset($_POST["datum"])*/) {
+                                                    if(filter_var($_POST["darabszam"], FILTER_VALIDATE_INT)) {
+                                                        $darabszam = $_POST["darabszam"];
+                                                    } else {
+                                                        print "<div>";
+                                                        print "A darabszám csak egész szám lehet!";
+                                                        print "</div>";
+                                                    }
+                                                    
+                                                    if(filter_var($_POST["egysegar"], FILTER_VALIDATE_FLOAT)) {
+                                                        $egysegar = $_POST["egysegar"];
+                                                    } else {
+                                                        print "<div>";
+                                                        print "Az egységár nem tört szám!";
+                                                        print "</div>";
+                                                    }
+                                                    
+                                                    $datum = date("Y-m-d");
+                                                    
+                                                    
+                                                    $termeknev = strip_tags($_POST["termeknev"]);
+                                                    
+                                                    $sql = "INSERT INTO `termek` (`id`, `termeknev`, `darabszam`, `egysegar`, `datum`, `mozgas`)"
+                                                        . "VALUES (NULL, '" . $termeknev . "', '" . $darabszam . "', '" . $egysegar . "', '" . $datum . "', 'Kivételezés');";
+                                                    
+                                                    mysqli_query($mysqli, $sql);
+                                                }
+                                                ?>
                                                 
                                             </div>
                                             <!-- /.box-body -->
